@@ -19,7 +19,7 @@ There are 4 different types already set up for you: Success, Error, Warning, Mes
 # Installation
 
 ## From Carthage
-TSMessages is available through [Carthage](https://github.com/Carthage/Carthage). To install
+SWMessages is available through [Carthage](https://github.com/Carthage/Carthage). To install
 it, simply add the following line to your Cartfile:
 
 github "saiprasanna/SWMessages"
