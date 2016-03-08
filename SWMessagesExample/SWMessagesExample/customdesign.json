@@ -1,6 +1,6 @@
 {
     "success": {
-        "buttonBackgroundImageName": "NotificationButtonBackground1.png",
+        "buttonBackgroundImageName": "NotificationButtonBackground.png",
         "buttonTitleTextColor": "#FFFFFF",
         "buttonTitleShadowColor": "#67B759",
         "buttonTitleShadowOffsetX": 0,
@@ -16,7 +16,7 @@
         "backgroundColor": "#76CF67"
     },
     "message": {
-        "buttonBackgroundImageName": "NotificationButtonBackground1.png",
+        "buttonBackgroundImageName": "NotificationButtonBackground.png",
         "buttonTitleTextColor": "#727C83",
         "buttonTitleShadowColor": "#EBEEF1",
         "buttonTitleShadowOffsetX": 0,
@@ -32,7 +32,7 @@
         "backgroundColor": "#D4DDDF"
     },
     "warning": {
-        "buttonBackgroundImageName": "NotificationButtonBackground1.png",
+        "buttonBackgroundImageName": "NotificationButtonBackground.png",
         "buttonTitleTextColor": "#484638",
         "buttonTitleShadowColor": "#E5D87C",
         "buttonTitleShadowOffsetX": 0,
@@ -48,7 +48,7 @@
         "backgroundColor": "#DAC43C"
     },
     "error": {
-        "buttonBackgroundImageName": "NotificationButtonBackground1.png",
+        "buttonBackgroundImageName": "NotificationButtonBackground.png",
         "buttonTitleTextColor": "#FFFFFF",
         "buttonTitleShadowColor": "#812929",
         "buttonTitleShadowOffsetX": 0,

@@ -130,7 +130,7 @@
                                     <rect key="frame" x="276" y="333" width="51" height="30"/>
                                 </variation>
                                 <connections>
-                                    <action selector="didTapNavHidden:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YkJ-M9-149"/>
+                                    <action selector="didTapBottom:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ndc-9K-QbS"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vip-8u-QhV">
