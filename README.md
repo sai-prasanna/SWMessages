@@ -37,27 +37,27 @@ To show notifications use the following code:
 
 ```swift
 SWMessage.showNotificationWithTitle(
-"Title",
-subtitle: "Subtitle",
-type: .Success
+    "Title",
+    subtitle: "Subtitle",
+    type: .Success
 )
 
 
 // Add a button inside the message
 SWMessage.showNotificationInViewController (
-self,
-title: "Update available",
-subtitle: "Please update our app. We added AI to replace you",
-image: nil,
-type: .Success,
-duration: .Automatic,
-callback: nil,
-buttonTitle: "Update",
-buttonCallback: { 
-SWMessage.showNotificationWithTitle("Thanks for updating", type: .Success)
-},
-atPosition: .Top,
-canBeDismissedByUser: true 
+    self,
+    title: "Update available",
+    subtitle: "Please update our app. We added AI to replace you",
+    image: nil,
+    type: .Success,
+    duration: .Automatic,
+    callback: nil,
+    buttonTitle: "Update",
+    buttonCallback: { 
+      SWMessage.showNotificationWithTitle("Thanks for updating", type: .Success)
+    },
+    atPosition: .Top,
+    canBeDismissedByUser: true 
 )
 
 
@@ -79,8 +79,8 @@ SWMessage.offsetHeightForMessage = 10.0
 You can customize a message view, right before it's displayed, like setting an alpha value, or adding a custom subview
 ```swift
 SWMessage.customizeMessageView = { (messageView) in 
-messageView.alpha = ..
-messageView.addSubView(someView)
+    messageView.alpha = ..
+    messageView.addSubView(someView)
 }
 ```
 
@@ -92,21 +92,21 @@ import SWMessages
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-var window: UIWindow?
+    var window: UIWindow?
 
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-SWMessageView.appearance().titleFont = UIFont.systemFontOfSize(17)
-SWMessageView.appearance().titleTextColor = UIColor.whiteColor()
-SWMessageView.appearance().contentFont = UIFont.systemFontOfSize(15)
-SWMessageView.appearance().contentTextColor  = UIColor.whiteColor()
-SWMessageView.appearance().errorIcon = UIImage(named: "errorIcon")
-SWMessageView.appearance().successIcon = UIImage(named: "successIcon")
-SWMessageView.appearance().warningIcon = UIImage(named: "warningIcon")
-SWMessageView.appearance().messageIcon = UIImage(named: "messageIcon")
-return true
-}
-...
+        SWMessageView.appearance().titleFont = UIFont.systemFontOfSize(17)
+        SWMessageView.appearance().titleTextColor = UIColor.whiteColor()
+        SWMessageView.appearance().contentFont = UIFont.systemFontOfSize(15)
+        SWMessageView.appearance().contentTextColor  = UIColor.whiteColor()
+        SWMessageView.appearance().errorIcon = UIImage(named: "errorIcon")
+        SWMessageView.appearance().successIcon = UIImage(named: "successIcon")
+        SWMessageView.appearance().warningIcon = UIImage(named: "warningIcon")
+        SWMessageView.appearance().messageIcon = UIImage(named: "messageIcon")
+        return true
+    }
+    ...
 }
 ```
 
