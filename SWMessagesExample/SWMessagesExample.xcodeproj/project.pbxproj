@@ -16,7 +16,6 @@
 		32B8946D1C8B6E4200C4D15F /* SWMessagesExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B8946C1C8B6E4200C4D15F /* SWMessagesExampleUITests.swift */; };
 		32B894B11C8B717300C4D15F /* SWMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B894AE1C8B716700C4D15F /* SWMessages.framework */; };
 		32B894B21C8B717300C4D15F /* SWMessages.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 32B894AE1C8B716700C4D15F /* SWMessages.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		32B894BA1C8C171B00C4D15F /* customdesign.json in Resources */ = {isa = PBXBuildFile; fileRef = 32B894B91C8C171B00C4D15F /* customdesign.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,7 +85,6 @@
 		32B8946C1C8B6E4200C4D15F /* SWMessagesExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SWMessagesExampleUITests.swift; sourceTree = "<group>"; };
 		32B8946E1C8B6E4200C4D15F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32B894A81C8B716700C4D15F /* SWMessages.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SWMessages.xcodeproj; path = ../SWMessages.xcodeproj; sourceTree = "<group>"; };
-		32B894B91C8C171B00C4D15F /* customdesign.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = customdesign.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,7 +137,6 @@
 		32B8944B1C8B6E4200C4D15F /* SWMessagesExample */ = {
 			isa = PBXGroup;
 			children = (
-				32B894B91C8C171B00C4D15F /* customdesign.json */,
 				32B8944C1C8B6E4200C4D15F /* AppDelegate.swift */,
 				32B8944E1C8B6E4200C4D15F /* ViewController.swift */,
 				32B894501C8B6E4200C4D15F /* Main.storyboard */,
@@ -310,7 +307,6 @@
 			files = (
 				32B894571C8B6E4200C4D15F /* LaunchScreen.storyboard in Resources */,
 				32B894541C8B6E4200C4D15F /* Assets.xcassets in Resources */,
-				32B894BA1C8C171B00C4D15F /* customdesign.json in Resources */,
 				32B894521C8B6E4200C4D15F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

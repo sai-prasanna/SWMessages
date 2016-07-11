@@ -27,15 +27,18 @@ private let kSWMessageDisplayTime = 1.5
 private let kSWMessageExtraDisplayTimePerPixel = 0.04
 private let kSWMessageAnimationDuration = 0.3
 
+
 public class SWMessage :NSObject {
     
-    /** Set a custom offset for the notification view */
-    public static var offsetHeightForMessage :CGFloat = 0.0
+    public static let sharedInstance = SWMessage()
     
-    public static var customizeMessageView  :((SWMessageView) -> Void)?
+    /** Set a custom offset for the notification view */
+    public var offsetHeightForMessage :CGFloat = 0.0
+    
+    public var customizeMessageView  :((SWMessageView) -> Void)?
     
     /** Use this property to set a default view controller to display the messages in */
-    public static var defaultViewController :UIViewController  {
+    public var defaultViewController :UIViewController  {
         get {
             return _defaultViewController ?? UIApplication.sharedApplication().keyWindow!.rootViewController!
         }
@@ -45,24 +48,23 @@ public class SWMessage :NSObject {
     }
     
     /** Indicates whether a notification is currently active. */
-    public private(set) static var notificationActive = false
+    public private(set) var notificationActive = false
     
     private var messages = [SWMessageView]()
-    internal static let sharedMessage = SWMessage()
-    private static weak var _defaultViewController :UIViewController?
-
+    private weak var _defaultViewController :UIViewController?
+    
     override init() {
         super.init()
     }
     
-    /** 
+    /**
      
      Shows a notification message
      
      - Parameter message: The title of the notification view
      - Parameter type: The notification type (Message, Warning, Error, Success)
      */
-    public class func showNotificationWithTitle(title: String, type: SWMessageNotificationType) {
+    public func showNotificationWithTitle(title: String, type: SWMessageNotificationType) {
         showNotificationWithTitle(title, subtitle: nil, type: type)
     }
     
@@ -74,11 +76,11 @@ public class SWMessage :NSObject {
      - Parameter subtitle: The text that is displayed underneath the title
      - Parameter type: The notification type (Message, Warning, Error, Success)
      */
-    public class func showNotificationWithTitle(title: String, subtitle: String?, type: SWMessageNotificationType) {
-        showNotificationInViewController(self.defaultViewController, title: title, subtitle: subtitle, type: type, duration: SWMessageDuration.Automatic)
+    public func showNotificationWithTitle(title: String, subtitle: String?, type: SWMessageNotificationType) {
+        showNotificationInViewController(defaultViewController, title: title, subtitle: subtitle, type: type, duration: .Automatic)
     }
     
-    /** 
+    /**
      
      Shows a notification message in a specific view controller
      
@@ -88,11 +90,11 @@ public class SWMessage :NSObject {
      - Parameter subtitle: The text that is displayed underneath the title
      - Parameter type: The notification type (Message, Warning, Error, Success)
      */
-    public class func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String, type: SWMessageNotificationType) {
+    public func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String, type: SWMessageNotificationType) {
         showNotificationInViewController(viewController, title: title, subtitle: subtitle, image: nil, type: type, duration: .Automatic, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .Top, canBeDismissedByUser: true)
     }
     
-    /** 
+    /**
      
      Shows a notification message in a specific view controller with a specific duration
      
@@ -103,7 +105,7 @@ public class SWMessage :NSObject {
      - Parameter type: The notification type (Message, Warning, Error, Success)
      - Parameter duration: The duration of the notification being displayed  (Automatic, Endless, Custom)
      */
-    public class func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String?, type: SWMessageNotificationType, duration: SWMessageDuration) {
+    public func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String?, type: SWMessageNotificationType, duration: SWMessageDuration) {
         showNotificationInViewController(viewController, title: title, subtitle: subtitle, image: nil, type: type, duration: duration, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .Top, canBeDismissedByUser: true)
     }
     
@@ -116,11 +118,11 @@ public class SWMessage :NSObject {
      - Parameter duration: The duration of the notification being displayed  (Automatic, Endless, Custom)
      - Parameter dismissingEnabled: Should the message be dismissed when the user taps/swipes it
      */
-    public class func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String, type: SWMessageNotificationType, duration: SWMessageDuration, canBeDismissedByUser dismissingEnabled: Bool) {
+    public func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String, type: SWMessageNotificationType, duration: SWMessageDuration, canBeDismissedByUser dismissingEnabled: Bool) {
         showNotificationInViewController(viewController, title: title, subtitle: subtitle, image: nil, type: type, duration: duration, callback: nil, buttonTitle: nil, buttonCallback: nil, atPosition: .Top, canBeDismissedByUser: dismissingEnabled)
     }
     
-    /** 
+    /**
      
      Shows a notification message in a specific view controller
      
@@ -136,17 +138,36 @@ public class SWMessage :NSObject {
      - Parameter messagePosition: The position of the message on the screen
      - Parameter dismissingEnabled: Should the message be dismissed when the user taps/swipes it
      */
-    public class func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String?, image: UIImage?, type: SWMessageNotificationType, duration: SWMessageDuration, callback: (() -> Void)?, buttonTitle: String?, buttonCallback: (() -> Void)?, atPosition messagePosition: SWMessageNotificationPosition, canBeDismissedByUser dismissingEnabled: Bool) {
+    public func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String?, image: UIImage?, type: SWMessageNotificationType, duration: SWMessageDuration, callback: (() -> Void)?, buttonTitle: String?, buttonCallback: (() -> Void)?, atPosition messagePosition: SWMessageNotificationPosition, canBeDismissedByUser dismissingEnabled: Bool) {
         // Create the TSMessageView
-        let messageView  = SWMessageView(title: title, subtitle: subtitle, image: image, type: type, duration: duration, viewController: viewController, callback: callback, buttonTitle: buttonTitle, buttonCallback: buttonCallback, position: messagePosition, dismissingEnabled: dismissingEnabled)
+        let messageView  = SWMessageView(
+            title: title,
+            subtitle: subtitle,
+            image: image,
+            type: type,
+            duration: duration,
+            viewController: viewController,
+            callback: callback,
+            buttonTitle: buttonTitle,
+            buttonCallback: buttonCallback,
+            position: messagePosition,
+            dismissingEnabled: dismissingEnabled
+        )
+        messageView.fadeOut = { [weak messageView, weak self] in
+            if let messageView = messageView {
+                self?.fadeOutNotification(messageView)
+            }
+        }
         
-        SWMessage.sharedMessage.messages.append(messageView)
+        messages.append(messageView)
+        
+        
         if !notificationActive {
-            SWMessage.sharedMessage.fadeInCurrentNotification()
+            fadeInCurrentNotification()
         }
     }
     
-    /** 
+    /**
      
      Fades out the currently displayed notification. If another notification is in the queue,
      the next one will be displayed automatically
@@ -154,41 +175,43 @@ public class SWMessage :NSObject {
      - Returns: true if the currently displayed notification was successfully dismissed. NO if no notification
      was currently displayed.
      */
-    public class func dismissActiveNotification() -> Bool {
+    public func dismissActiveNotification() -> Bool {
         return dismissActiveNotificationWithCompletion(nil)
     }
     
-    class func dismissActiveNotificationWithCompletion(completion: (() -> Void)?) -> Bool {
-        if SWMessage.sharedMessage.messages.count == 0 {
+    
+    public func dismissActiveNotificationWithCompletion(completion: (() -> Void)?) -> Bool {
+        if messages.count == 0 {
             return false
         }
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
-            if SWMessage.sharedMessage.messages.count == 0 {
+            if self.messages.count == 0 {
                 return
             }
-            let currentMessage: SWMessageView = SWMessage.sharedMessage.messages[0]
+            let currentMessage = self.messages[0]
             if currentMessage.messageIsFullyDisplayed {
-                SWMessage.sharedMessage.fadeOutNotification(currentMessage, animationFinishedBlock: completion)
+                self.fadeOutNotification(currentMessage, animationFinishedBlock: completion)
+            } else {
+                
+                NSTimer.scheduledTimerWithTimeInterval(kSWMessageAnimationDuration + 0.1, target: NSBlockOperation(block: {
+                    self.fadeOutNotification(currentMessage, animationFinishedBlock: completion)
+                }), selector: #selector(NSOperation.main), userInfo: nil, repeats: false)
+                
             }
         })
         return true
     }
     
-    /** Use this method to use custom designs in your messages. */
-    public class func addCustomDesignFromFileWithName(fileName: String) {
-        SWMessageView.addNotificationDesignFromFile(fileName)
-    }
-    
     /**  The currently queued array of TSMessageView */
     public var  queuedMessages :[SWMessageView] {
-        return SWMessage.sharedMessage.messages
+        return messages
     }
     
     private func fadeInCurrentNotification() {
         if messages.count == 0 {
             return
         }
-        SWMessage.notificationActive = true
+        notificationActive = true
         let currentView = messages[0]
         var verticalOffset: CGFloat = 0.0
         let addStatusBarHeightToVerticalOffset = {() -> Void in
@@ -225,7 +248,7 @@ public class SWMessage :NSObject {
         }
         var toPoint: CGPoint
         if currentView.messagePosition != .Bottom {
-            toPoint = CGPointMake(currentView.center.x, SWMessage.offsetHeightForMessage + verticalOffset + CGRectGetHeight(currentView.frame) / 2.0)
+            toPoint = CGPointMake(currentView.center.x, offsetHeightForMessage + verticalOffset + CGRectGetHeight(currentView.frame) / 2.0)
         }
         else {
             var y: CGFloat = currentView.viewController.view.bounds.size.height - CGRectGetHeight(currentView.frame) / 2.0
@@ -234,8 +257,8 @@ public class SWMessage :NSObject {
             }
             toPoint = CGPointMake(currentView.center.x, y)
         }
-       
-        SWMessage.customizeMessageView?(currentView)
+        
+        customizeMessageView?(currentView)
         
         let animationBlock = {
             currentView.center = toPoint
@@ -259,7 +282,7 @@ public class SWMessage :NSObject {
         
         if let durationToPresent = durationToPresent {
             dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                self.performSelector("fadeOutNotification:", withObject: currentView, afterDelay: durationToPresent)
+                self.performSelector(#selector(SWMessage.fadeOutNotification(_:)), withObject: currentView, afterDelay: durationToPresent)
             })
         }
     }
@@ -280,9 +303,9 @@ public class SWMessage :NSObject {
         fadeOutNotification(currentView, animationFinishedBlock: nil)
     }
     
-    private func fadeOutNotification(currentView: SWMessageView, animationFinishedBlock animationFinished: (() -> Void)?) {
+    func fadeOutNotification(currentView: SWMessageView, animationFinishedBlock animationFinished: (() -> Void)?) {
         currentView.messageIsFullyDisplayed = false
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "fadeOutNotification:", object: currentView)
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(SWMessage.fadeOutNotification(_:)), object: currentView)
         var fadeOutToPoint: CGPoint
         if currentView.messagePosition != .Bottom {
             fadeOutToPoint = CGPointMake(currentView.center.x, -CGRectGetHeight(currentView.frame) / 2.0)
@@ -297,7 +320,7 @@ public class SWMessage :NSObject {
                 if self.messages.count > 0 {
                     self.messages.removeAtIndex(0)
                 }
-                SWMessage.notificationActive = false
+                self.notificationActive = false
                 if self.messages.count > 0 {
                     self.fadeInCurrentNotification()
                 }

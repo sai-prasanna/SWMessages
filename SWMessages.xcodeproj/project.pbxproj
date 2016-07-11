@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		323326521D339B24009243B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 323326511D339B24009243B0 /* Images.xcassets */; };
 		32B894011C8B5FFD00C4D15F /* SWMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 32B894001C8B5FFD00C4D15F /* SWMessages.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32B894081C8B5FFE00C4D15F /* SWMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B893FD1C8B5FFD00C4D15F /* SWMessages.framework */; };
 		32B8940D1C8B5FFE00C4D15F /* SWMessagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B8940C1C8B5FFE00C4D15F /* SWMessagesTests.swift */; };
@@ -18,8 +19,6 @@
 		32B8942A1C8B606500C4D15F /* NotificationBackgroundWarningIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B8941D1C8B606500C4D15F /* NotificationBackgroundWarningIcon@2x.png */; };
 		32B8942B1C8B606500C4D15F /* NotificationButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B8941E1C8B606500C4D15F /* NotificationButtonBackground.png */; };
 		32B8942C1C8B606500C4D15F /* NotificationButtonBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32B8941F1C8B606500C4D15F /* NotificationButtonBackground@2x.png */; };
-		32B8942D1C8B606500C4D15F /* SWMessagesDefaultDesign.json in Resources */ = {isa = PBXBuildFile; fileRef = 32B894201C8B606500C4D15F /* SWMessagesDefaultDesign.json */; };
-		32B8943A1C8B61A800C4D15F /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B894351C8B61A800C4D15F /* SwiftyJSON.swift */; };
 		32B8943B1C8B61A800C4D15F /* SWMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B894361C8B61A800C4D15F /* SWMessage.swift */; };
 		32B8943C1C8B61A800C4D15F /* SWMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B894371C8B61A800C4D15F /* SWMessageView.swift */; };
 		32B8943D1C8B61A800C4D15F /* SWTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B894381C8B61A800C4D15F /* SWTypes.swift */; };
@@ -37,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		323326511D339B24009243B0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SWMessages/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		32B893FD1C8B5FFD00C4D15F /* SWMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SWMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32B894001C8B5FFD00C4D15F /* SWMessages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWMessages.h; sourceTree = "<group>"; };
 		32B894021C8B5FFD00C4D15F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -51,8 +51,6 @@
 		32B8941D1C8B606500C4D15F /* NotificationBackgroundWarningIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundWarningIcon@2x.png"; sourceTree = "<group>"; };
 		32B8941E1C8B606500C4D15F /* NotificationButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationButtonBackground.png; sourceTree = "<group>"; };
 		32B8941F1C8B606500C4D15F /* NotificationButtonBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationButtonBackground@2x.png"; sourceTree = "<group>"; };
-		32B894201C8B606500C4D15F /* SWMessagesDefaultDesign.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SWMessagesDefaultDesign.json; sourceTree = "<group>"; };
-		32B894351C8B61A800C4D15F /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		32B894361C8B61A800C4D15F /* SWMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWMessage.swift; sourceTree = "<group>"; };
 		32B894371C8B61A800C4D15F /* SWMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWMessageView.swift; sourceTree = "<group>"; };
 		32B894381C8B61A800C4D15F /* SWTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWTypes.swift; sourceTree = "<group>"; };
@@ -99,6 +97,7 @@
 		32B893FF1C8B5FFD00C4D15F /* SWMessages */ = {
 			isa = PBXGroup;
 			children = (
+				323326511D339B24009243B0 /* Images.xcassets */,
 				32B894341C8B61A800C4D15F /* Source */,
 				32B894171C8B606500C4D15F /* Assets */,
 				32B894001C8B5FFD00C4D15F /* SWMessages.h */,
@@ -127,7 +126,6 @@
 				32B8941D1C8B606500C4D15F /* NotificationBackgroundWarningIcon@2x.png */,
 				32B8941E1C8B606500C4D15F /* NotificationButtonBackground.png */,
 				32B8941F1C8B606500C4D15F /* NotificationButtonBackground@2x.png */,
-				32B894201C8B606500C4D15F /* SWMessagesDefaultDesign.json */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -146,7 +144,6 @@
 		32B8943F1C8B676E00C4D15F /* library */ = {
 			isa = PBXGroup;
 			children = (
-				32B894351C8B61A800C4D15F /* SwiftyJSON.swift */,
 				32B894391C8B61A800C4D15F /* UIColor+Hex.swift */,
 			);
 			name = library;
@@ -244,7 +241,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32B8942D1C8B606500C4D15F /* SWMessagesDefaultDesign.json in Resources */,
+				323326521D339B24009243B0 /* Images.xcassets in Resources */,
 				32B894291C8B606500C4D15F /* NotificationBackgroundWarningIcon.png in Resources */,
 				32B894271C8B606500C4D15F /* NotificationBackgroundSuccessIcon.png in Resources */,
 				32B894251C8B606500C4D15F /* NotificationBackgroundErrorIcon.png in Resources */,
@@ -273,7 +270,6 @@
 				32B8943D1C8B61A800C4D15F /* SWTypes.swift in Sources */,
 				32B8943C1C8B61A800C4D15F /* SWMessageView.swift in Sources */,
 				32B8943E1C8B61A800C4D15F /* UIColor+Hex.swift in Sources */,
-				32B8943A1C8B61A800C4D15F /* SwiftyJSON.swift in Sources */,
 				32B8943B1C8B61A800C4D15F /* SWMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
