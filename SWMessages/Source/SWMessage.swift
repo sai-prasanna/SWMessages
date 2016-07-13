@@ -137,8 +137,9 @@ public class SWMessage :NSObject {
      - Parameter buttonCallback: The block that should be executed, when the user tapped on the button
      - Parameter messagePosition: The position of the message on the screen
      - Parameter dismissingEnabled: Should the message be dismissed when the user taps/swipes it
+     - Parameter overrideStyle: Override default styles using this style object, it has highest priority.
      */
-    public func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String?, image: UIImage?, type: SWMessageNotificationType, duration: SWMessageDuration, callback: (() -> Void)?, buttonTitle: String?, buttonCallback: (() -> Void)?, atPosition messagePosition: SWMessageNotificationPosition, canBeDismissedByUser dismissingEnabled: Bool) {
+    public func showNotificationInViewController(viewController: UIViewController, title: String, subtitle: String?, image: UIImage?, type: SWMessageNotificationType, duration: SWMessageDuration, callback: (() -> Void)?, buttonTitle: String?, buttonCallback: (() -> Void)?, atPosition messagePosition: SWMessageNotificationPosition, canBeDismissedByUser dismissingEnabled: Bool, overrideStyle: SWMessageView.Style?=nil) {
         // Create the TSMessageView
         let messageView  = SWMessageView(
             title: title,
@@ -151,7 +152,8 @@ public class SWMessage :NSObject {
             buttonTitle: buttonTitle,
             buttonCallback: buttonCallback,
             position: messagePosition,
-            dismissingEnabled: dismissingEnabled
+            dismissingEnabled: dismissingEnabled,
+            style: overrideStyle
         )
         messageView.fadeOut = { [weak messageView, weak self] in
             if let messageView = messageView {

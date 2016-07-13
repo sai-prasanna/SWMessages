@@ -36,7 +36,7 @@ Copy the source files and asset files from SWMessages directory to your project.
 To show notifications use the following code:
 
 ```swift
-SWMessage.showNotificationWithTitle(
+SWMessage.sharedInstance.showNotificationWithTitle(
     "Title",
     subtitle: "Subtitle",
     type: .Success
@@ -44,7 +44,7 @@ SWMessage.showNotificationWithTitle(
 
 
 // Add a button inside the message
-SWMessage.showNotificationInViewController (
+SWMessage.sharedInstance.showNotificationInViewController (
     self,
     title: "Update available",
     subtitle: "Please update our app. We added AI to replace you",
@@ -61,19 +61,15 @@ SWMessage.showNotificationInViewController (
 )
 
 
-// Use a custom design file
-SWMessage.addCustomDesignFromFileWithName("AlternativeDesign.json")
-```
-
 You can define a default view controller in which the notifications should be displayed:
 ```swift
-SWMessage.defaultViewController = myNavController
+SWMessage.sharedInstance.defaultViewController = myNavController
 ```
 
 You can set custom offset to position message.
 
 ```swift
-SWMessage.offsetHeightForMessage = 10.0
+SWMessage.sharedInstance.offsetHeightForMessage = 10.0
 ```
 
 You can customize a message view, right before it's displayed, like setting an alpha value, or adding a custom subview
@@ -84,29 +80,12 @@ SWMessage.customizeMessageView = { (messageView) in
 }
 ```
 
-You can customize message view elements using UIAppearance
+You can customize message view for default message types by setting the styleForMessageType callback which takes
+the type of message as parameter and returns a SWMessageView.Style struct object.
 ```swift
-import UIKit
-import SWMessages
-
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
-        SWMessageView.appearance().titleFont = UIFont.systemFontOfSize(17)
-        SWMessageView.appearance().titleTextColor = UIColor.whiteColor()
-        SWMessageView.appearance().contentFont = UIFont.systemFontOfSize(15)
-        SWMessageView.appearance().contentTextColor  = UIColor.whiteColor()
-        SWMessageView.appearance().errorIcon = UIImage(named: "errorIcon")
-        SWMessageView.appearance().successIcon = UIImage(named: "successIcon")
-        SWMessageView.appearance().warningIcon = UIImage(named: "warningIcon")
-        SWMessageView.appearance().messageIcon = UIImage(named: "messageIcon")
-        return true
-    }
-    ...
+SWMessageView.styleForMessageType = { (type)
+  ....
+  return SWMessageView.Style(...)
 }
 ```
 
@@ -122,12 +101,12 @@ The following properties can be set when creating a new notification:
 * **duration**: The duration the notification should be displayed (Automatic, Endless, Custom)
 * **callback**: The block that should be executed, when the user dismissed the message by tapping on it or swiping it to the top.
 * **buttonTitle**: The title of button to be shown in right.
-* **buttonCallback**: The block that should be executed, when user taps the right button. 
+* **buttonCallback**: The block that should be executed, when user taps the right button.
+* **overrideStyle**: The style override for the particular message
 
 Except the title and the notification type, all of the listed values are optional
 
 If you don't want a detailed description (the text underneath the title) you don't need to set one. The notification will automatically resize itself properly. 
-
 
 
 # License
