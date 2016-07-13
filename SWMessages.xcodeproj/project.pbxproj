@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		323326521D339B24009243B0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 323326511D339B24009243B0 /* Images.xcassets */; };
 		32B894011C8B5FFD00C4D15F /* SWMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 32B894001C8B5FFD00C4D15F /* SWMessages.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32B894081C8B5FFE00C4D15F /* SWMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32B893FD1C8B5FFD00C4D15F /* SWMessages.framework */; };
 		32B8940D1C8B5FFE00C4D15F /* SWMessagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B8940C1C8B5FFE00C4D15F /* SWMessagesTests.swift */; };
@@ -36,7 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		323326511D339B24009243B0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SWMessages/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		32B893FD1C8B5FFD00C4D15F /* SWMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SWMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32B894001C8B5FFD00C4D15F /* SWMessages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SWMessages.h; sourceTree = "<group>"; };
 		32B894021C8B5FFD00C4D15F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -97,7 +95,6 @@
 		32B893FF1C8B5FFD00C4D15F /* SWMessages */ = {
 			isa = PBXGroup;
 			children = (
-				323326511D339B24009243B0 /* Images.xcassets */,
 				32B894341C8B61A800C4D15F /* Source */,
 				32B894171C8B606500C4D15F /* Assets */,
 				32B894001C8B5FFD00C4D15F /* SWMessages.h */,
@@ -241,7 +238,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				323326521D339B24009243B0 /* Images.xcassets in Resources */,
 				32B894291C8B606500C4D15F /* NotificationBackgroundWarningIcon.png in Resources */,
 				32B894271C8B606500C4D15F /* NotificationBackgroundSuccessIcon.png in Resources */,
 				32B894251C8B606500C4D15F /* NotificationBackgroundErrorIcon.png in Resources */,
