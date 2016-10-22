@@ -22,10 +22,30 @@
 //  THE SOFTWARE.
 
 import UIKit
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 private let messageViewMinimumPadding :CGFloat = 15.0
 
-public class SWMessageView :UIView , UIGestureRecognizerDelegate {
+open class SWMessageView :UIView , UIGestureRecognizerDelegate {
     
     public struct Style {
         let image: UIImage?
@@ -38,42 +58,42 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
     }
     
     /** The displayed title of this message */
-    public let title :String
+    open let title :String
     
     /** The displayed subtitle of this message */
-    public let subtitle :String?
+    open let subtitle :String?
     
     /** The view controller this message is displayed in */
-    public let viewController :UIViewController
+    open let viewController :UIViewController
     
-    public let buttonTitle :String?
+    open let buttonTitle :String?
     
     /** The duration of the displayed message. */
-    public var duration :SWMessageDuration = .Automatic
+    open var duration :SWMessageDuration = .automatic
     
     /** The position of the message (top or bottom or as overlay) */
-    public var messagePosition :SWMessageNotificationPosition
-    public var notificationType :SWMessageNotificationType
+    open var messagePosition :SWMessageNotificationPosition
+    open var notificationType :SWMessageNotificationType
     
     /** Is the message currenlty fully displayed? Is set as soon as the message is really fully visible */
-    public var messageIsFullyDisplayed = false
+    open var messageIsFullyDisplayed = false
     
     
     /** Function to customize style globally, initialized to default style. Priority will be This  customOptions in init > styleForMessageType */
-    public static var styleForMessageType :(SWMessageNotificationType) -> SWMessageView.Style = defaultStyleForMessageType
+    open static var styleForMessageType :(SWMessageNotificationType) -> SWMessageView.Style = defaultStyleForMessageType
     
     var fadeOut :(() -> Void)?
     
-    private let titleLabel = UILabel()
-    private lazy var contentLabel = UILabel()
-    private var iconImageView :UIImageView?
-    private var button :UIButton?
-    private let backgroundView = UIView()
-    private var textSpaceLeft :CGFloat = 0
-    private var textSpaceRight :CGFloat = 0
-    private var callback :(()-> Void)?
-    private var buttonCallback :(()-> Void)?
-    private let padding :CGFloat
+    fileprivate let titleLabel = UILabel()
+    fileprivate lazy var contentLabel = UILabel()
+    fileprivate var iconImageView :UIImageView?
+    fileprivate var button :UIButton?
+    fileprivate let backgroundView = UIView()
+    fileprivate var textSpaceLeft :CGFloat = 0
+    fileprivate var textSpaceRight :CGFloat = 0
+    fileprivate var callback :(()-> Void)?
+    fileprivate var buttonCallback :(()-> Void)?
+    fileprivate let padding :CGFloat
     
     /**
      
@@ -109,13 +129,13 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
         self.title = title
         self.subtitle = subtitle
         self.buttonTitle = buttonTitle
-        self.duration = duration ?? .Automatic
+        self.duration = duration ?? .automatic
         self.viewController = viewController
         self.messagePosition = position
         self.callback = callback
         self.buttonCallback = buttonCallback
         let screenWidth: CGFloat = viewController.view.bounds.size.width
-        self.padding = messagePosition == .NavBarOverlay ? messageViewMinimumPadding + 10 : messageViewMinimumPadding
+        self.padding = messagePosition == .navBarOverlay ? messageViewMinimumPadding + 10 : messageViewMinimumPadding
         self.notificationType = type
         
         super.init(frame :CGRect.zero)
@@ -124,8 +144,8 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
         let options = style ?? SWMessageView.styleForMessageType(type)
         let currentImage = image ?? options.image
         
-        backgroundColor = UIColor.clearColor()
-        backgroundView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        backgroundColor = UIColor.clear
+        backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         backgroundView.backgroundColor = options.backgroundColor
         addSubview(backgroundView)
         
@@ -135,31 +155,31 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
             textSpaceLeft +=  padding + 20
             let imageView = UIImageView(image: currentImage)
             iconImageView = imageView
-            imageView.contentMode = .ScaleAspectFit
-            imageView.frame =  CGRectMake(padding + 5, padding, 20, 20)
+            imageView.contentMode = .scaleAspectFit
+            imageView.frame =  CGRect(x: padding + 5, y: padding, width: 20, height: 20)
             
             addSubview(imageView)
         }
         // Set up title label
         titleLabel.text = title
         titleLabel.textColor = fontColor
-        titleLabel.backgroundColor = UIColor.clearColor()
+        titleLabel.backgroundColor = UIColor.clear
         
-        titleLabel.font = options.titleFont ?? UIFont.boldSystemFontOfSize(14)
+        titleLabel.font = options.titleFont ?? UIFont.boldSystemFont(ofSize: 14)
         if let shadowColor = options.textShadowColor,let shadowOffset = options.shadowOffset {
             titleLabel.shadowColor = shadowColor
             titleLabel.shadowOffset = shadowOffset
         }
         titleLabel.numberOfLines = 0
-        titleLabel.lineBreakMode = .ByWordWrapping
+        titleLabel.lineBreakMode = .byWordWrapping
         addSubview(titleLabel)
         
         // Set up content label (if set)
         if subtitle?.characters.count > 0 {
             contentLabel.text = subtitle
             contentLabel.textColor = options.textColor
-            contentLabel.backgroundColor = UIColor.clearColor()
-            contentLabel.font = options.contentFont ?? UIFont.systemFontOfSize(12)
+            contentLabel.backgroundColor = UIColor.clear
+            contentLabel.font = options.contentFont ?? UIFont.systemFont(ofSize: 12)
             contentLabel.shadowColor = titleLabel.shadowColor
             contentLabel.shadowOffset = titleLabel.shadowOffset
             contentLabel.lineBreakMode = titleLabel.lineBreakMode
@@ -168,20 +188,20 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
         }
         
         // Set up button (if set)
-        if let buttonTitle = buttonTitle where buttonTitle.characters.count > 0 {
-            button = UIButton(type: .Custom)
-            button?.setTitle(buttonTitle, forState: .Normal)
+        if let buttonTitle = buttonTitle , buttonTitle.characters.count > 0 {
+            button = UIButton(type: .custom)
+            button?.setTitle(buttonTitle, for: UIControlState())
             let buttonTitleTextColor = options.textColor
-            button?.setTitleColor(buttonTitleTextColor, forState: .Normal)
-            button?.titleLabel?.font = UIFont.boldSystemFontOfSize(14.0)
+            button?.setTitleColor(buttonTitleTextColor, for: UIControlState())
+            button?.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14.0)
             if let shadowColor = options.textShadowColor,let shadowOffset = options.shadowOffset {
                 button?.titleLabel?.shadowColor = shadowColor
                 button?.titleLabel?.shadowOffset = shadowOffset
             }
-            button?.addTarget(self, action: #selector(SWMessageView.buttonTapped(_:)), forControlEvents: .TouchUpInside)
+            button?.addTarget(self, action: #selector(SWMessageView.buttonTapped(_:)), for: .touchUpInside)
             button?.contentEdgeInsets = UIEdgeInsetsMake(0.0, 5.0, 0.0, 5.0)
             button?.sizeToFit()
-            button?.frame = CGRectMake(screenWidth - padding - button!.frame.size.width, 0.0, button!.frame.size.width, 31.0)
+            button?.frame = CGRect(x: screenWidth - padding - button!.frame.size.width, y: 0.0, width: button!.frame.size.width, height: 31.0)
             addSubview(button!)
             textSpaceRight = button!.frame.size.width + padding
         }
@@ -189,19 +209,19 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
         let actualHeight: CGFloat = updateHeightOfMessageView()
         // this call also takes care of positioning the labels
         var topPosition: CGFloat = -actualHeight
-        if messagePosition == .Bottom {
+        if messagePosition == .bottom {
             topPosition = viewController.view.bounds.size.height
         }
-        frame = CGRectMake(0.0, topPosition, screenWidth, actualHeight)
-        if messagePosition == .Top {
-            autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin, .FlexibleBottomMargin]
+        frame = CGRect(x: 0.0, y: topPosition, width: screenWidth, height: actualHeight)
+        if messagePosition == .top {
+            autoresizingMask = [.flexibleWidth, .flexibleTopMargin, .flexibleBottomMargin]
         }
         else {
-            autoresizingMask = ([.FlexibleWidth, .FlexibleTopMargin, .FlexibleBottomMargin])
+            autoresizingMask = ([.flexibleWidth, .flexibleTopMargin, .flexibleBottomMargin])
         }
         if dismissingEnabled {
             let gestureRec: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(SWMessageView.fadeMeOut))
-            gestureRec.direction = (messagePosition == .Top ? .Up : .Down)
+            gestureRec.direction = (messagePosition == .top ? .up : .down)
             addGestureRecognizer(gestureRec)
             let tapRec: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SWMessageView.fadeMeOut))
             addGestureRecognizer(tapRec)
@@ -221,10 +241,10 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
     func updateHeightOfMessageView() -> CGFloat {
         var currentHeight: CGFloat
         let screenWidth: CGFloat = viewController.view.bounds.size.width
-        titleLabel.frame = CGRectMake(textSpaceLeft, padding, screenWidth - padding - textSpaceLeft - textSpaceRight, 0.0)
+        titleLabel.frame = CGRect(x: textSpaceLeft, y: padding, width: screenWidth - padding - textSpaceLeft - textSpaceRight, height: 0.0)
         titleLabel.sizeToFit()
         if subtitle?.characters.count > 0 {
-            contentLabel.frame = CGRectMake(textSpaceLeft, titleLabel.frame.origin.y + titleLabel.frame.size.height + 5.0, screenWidth - padding - textSpaceLeft - textSpaceRight, 0.0)
+            contentLabel.frame = CGRect(x: textSpaceLeft, y: titleLabel.frame.origin.y + titleLabel.frame.size.height + 5.0, width: screenWidth - padding - textSpaceLeft - textSpaceRight, height: 0.0)
             contentLabel.sizeToFit()
             currentHeight = contentLabel.frame.origin.y + contentLabel.frame.size.height
         }
@@ -240,45 +260,45 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
             }
             else {
                 // z-align
-                iconImageView.center = CGPointMake(iconImageView.center.x, round(currentHeight / 2.0))
+                iconImageView.center = CGPoint(x: iconImageView.center.x, y: round(currentHeight / 2.0))
             }
         }
-        frame = CGRectMake(0.0, frame.origin.y, frame.size.width, currentHeight)
+        frame = CGRect(x: 0.0, y: frame.origin.y, width: frame.size.width, height: currentHeight)
         if let button = button {
             // z-align button
-            button.center = CGPointMake(button.center.x, round(currentHeight / 2.0))
-            button.frame = CGRectMake(frame.size.width - textSpaceRight, round((frame.size.height / 2.0) - button.frame.size.height / 2.0), button.frame.size.width, button.frame.size.height)
+            button.center = CGPoint(x: button.center.x, y: round(currentHeight / 2.0))
+            button.frame = CGRect(x: frame.size.width - textSpaceRight, y: round((frame.size.height / 2.0) - button.frame.size.height / 2.0), width: button.frame.size.width, height: button.frame.size.height)
         }
-        var backgroundFrame: CGRect = CGRectMake(0, 0, screenWidth, currentHeight)
+        var backgroundFrame: CGRect = CGRect(x: 0, y: 0, width: screenWidth, height: currentHeight)
         // increase frame of background view because of the spring animation
-        if messagePosition == .Top {
+        if messagePosition == .top {
             var topOffset: CGFloat = 0.0
             let navigationController: UINavigationController? = viewController as? UINavigationController ?? viewController.navigationController
             
             if let nav = navigationController {
                 let isNavBarIsHidden: Bool =  SWMessageView.isNavigationBarInNavigationControllerHidden(nav)
-                let isNavBarIsOpaque: Bool = !nav.navigationBar.translucent && nav.navigationBar.alpha == 1
+                let isNavBarIsOpaque: Bool = !nav.navigationBar.isTranslucent && nav.navigationBar.alpha == 1
                 if isNavBarIsHidden || isNavBarIsOpaque {
                     topOffset = -30.0
                 }
             }
             backgroundFrame = UIEdgeInsetsInsetRect(backgroundFrame, UIEdgeInsetsMake(topOffset, 0.0, 0.0, 0.0))
         }
-        else if messagePosition == .Bottom {
+        else if messagePosition == .bottom {
             backgroundFrame = UIEdgeInsetsInsetRect(backgroundFrame, UIEdgeInsetsMake(0.0, 0.0, -30.0, 0.0))
         }
         backgroundView.frame = backgroundFrame
         return currentHeight
     }
     
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
-        updateHeightOfMessageView()
+        let _ = updateHeightOfMessageView()
     }
     
-    override public func didMoveToWindow() {
+    override open func didMoveToWindow() {
         super.didMoveToWindow()
-        if duration == .Endless && superview != nil && window == nil {
+        if duration == .endless && superview != nil && window == nil {
             // view controller was dismissed, let's fade out
             fadeMeOut()
         }
@@ -289,26 +309,26 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
         fadeOut?()
     }
     
-    func buttonTapped(sender: AnyObject) {
+    func buttonTapped(_ sender: AnyObject) {
         buttonCallback?()
         fadeMeOut()
     }
     
-    func handleTap(tapGesture: UITapGestureRecognizer) {
-        if tapGesture.state == .Recognized {
+    func handleTap(_ tapGesture: UITapGestureRecognizer) {
+        if tapGesture.state == .recognized {
             callback?()
         }
     }
     
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return touch.view is UIControl
     }
     
-    class func isNavigationBarInNavigationControllerHidden(navController: UINavigationController) -> Bool {
-        if navController.navigationBarHidden {
+    class func isNavigationBarInNavigationControllerHidden(_ navController: UINavigationController) -> Bool {
+        if navController.isNavigationBarHidden {
             return true
         }
-        else if navController.navigationBar.hidden {
+        else if navController.navigationBar.isHidden {
             return true
         }
         else {
@@ -328,68 +348,68 @@ private class SWBlurView :UIView {
         }
     }
     
-    private lazy var toolbar :UIToolbar = {
+    fileprivate lazy var toolbar :UIToolbar = {
         let toolbar = UIToolbar(frame: self.bounds)
-        toolbar.userInteractionEnabled = false
-        toolbar.translucent = false
-        toolbar.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        toolbar.setBackgroundImage(nil, forToolbarPosition: .Any, barMetrics: .Default)
+        toolbar.isUserInteractionEnabled = false
+        toolbar.isTranslucent = false
+        toolbar.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        toolbar.setBackgroundImage(nil, forToolbarPosition: .any, barMetrics: .default)
         self.addSubview(toolbar)
         return toolbar
     }()
 }
 
-private func defaultStyleForMessageType(type: SWMessageNotificationType) -> SWMessageView.Style {
+private func defaultStyleForMessageType(_ type: SWMessageNotificationType) -> SWMessageView.Style {
     let contentFontSize = CGFloat(12)
     let titleFontSize = CGFloat(14)
     let shadowOffsetX = 0
     
-    func bundledImageNamed(name: String) -> UIImage? {
-        let bundle: NSBundle = NSBundle(forClass: SWMessage.self)
-        let imagePath: String = bundle.pathForResource(name, ofType: nil) ?? ""
+    func bundledImageNamed(_ name: String) -> UIImage? {
+        let bundle: Bundle = Bundle(for: SWMessage.self)
+        let imagePath: String = bundle.path(forResource: name, ofType: nil) ?? ""
         return UIImage(contentsOfFile: imagePath) ?? UIImage(named: name)
     }
     
     switch type {
-    case .Success:
+    case .success:
         return SWMessageView.Style(
             image: bundledImageNamed("NotificationBackgroundSuccessIcon.png"),
             backgroundColor: UIColor(hexString: "#76CF67"),
-            textColor: UIColor.whiteColor(),
+            textColor: UIColor.white,
             textShadowColor: UIColor(hexString: "#67B759"),
-            titleFont: UIFont.systemFontOfSize(titleFontSize),
-            contentFont: UIFont.systemFontOfSize(contentFontSize),
+            titleFont: UIFont.systemFont(ofSize: titleFontSize),
+            contentFont: UIFont.systemFont(ofSize: contentFontSize),
             shadowOffset: CGSize(width: 0, height: -1)
         )
-    case .Message:
+    case .message:
         return SWMessageView.Style(
             image: nil,
             backgroundColor: UIColor(hexString: "#D4DDDF"),
             textColor: UIColor(hexString: "#727C83"),
             textShadowColor: UIColor(hexString: "#EBEEF1"),
-            titleFont: UIFont.systemFontOfSize(titleFontSize),
-            contentFont: UIFont.systemFontOfSize(contentFontSize),
+            titleFont: UIFont.systemFont(ofSize: titleFontSize),
+            contentFont: UIFont.systemFont(ofSize: contentFontSize),
             shadowOffset: CGSize(width: 0, height: -1)
         )
-    case .Warning:
+    case .warning:
         return SWMessageView.Style(
             image: bundledImageNamed("NotificationBackgroundWarningIcon.png"),
             backgroundColor: UIColor(hexString: "#DAC43C"),
             textColor: UIColor(hexString: "#484638"),
             textShadowColor: UIColor(hexString: "#E5D87C"),
-            titleFont: UIFont.systemFontOfSize(titleFontSize),
-            contentFont: UIFont.systemFontOfSize(contentFontSize),
+            titleFont: UIFont.systemFont(ofSize: titleFontSize),
+            contentFont: UIFont.systemFont(ofSize: contentFontSize),
             shadowOffset: CGSize(width: 0, height: 1)
         )
         
-    case .Error:
+    case .error:
         return SWMessageView.Style(
             image: bundledImageNamed("NotificationBackgroundErrorIcon.png"),
             backgroundColor: UIColor(hexString: "#DD3B41"),
-            textColor: UIColor.whiteColor(),
+            textColor: UIColor.white,
             textShadowColor: UIColor(hexString: "#812929"),
-            titleFont: UIFont.systemFontOfSize(titleFontSize),
-            contentFont: UIFont.systemFontOfSize(contentFontSize),
+            titleFont: UIFont.systemFont(ofSize: titleFontSize),
+            contentFont: UIFont.systemFont(ofSize: contentFontSize),
             shadowOffset: CGSize(width: 0, height: -1)
         )
     }

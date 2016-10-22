@@ -28,129 +28,129 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         SWMessage.sharedInstance.defaultViewController = self
-        edgesForExtendedLayout = .All
-        navigationController?.navigationBar.translucent = true
+        edgesForExtendedLayout = .all
+        navigationController?.navigationBar.isTranslucent = true
         
     }
     
-    @IBAction func didTapError(sender: AnyObject) {
+    @IBAction func didTapError(_ sender: AnyObject) {
         SWMessage.sharedInstance.showNotificationWithTitle("Something failed!",
             subtitle: "Cannot open the pod bay doors",
-            type: .Error)
+            type: .error)
     }
     
     
-    @IBAction func didTapWarning(sender: AnyObject) {
+    @IBAction func didTapWarning(_ sender: AnyObject) {
         SWMessage.sharedInstance.showNotificationWithTitle("Warning",
             subtitle: "Imminent singularity, please take shelter or wage Butlerian Jihad",
-            type: .Warning)
+            type: .warning)
     }
     
-    @IBAction func didTapMessage(sender: AnyObject) {
+    @IBAction func didTapMessage(_ sender: AnyObject) {
         SWMessage.sharedInstance.showNotificationWithTitle("Info",
             subtitle: "Humans are required to submit for mandatory inspection!",
-            type: .Message)
+            type: .message)
     }
     
     
-    @IBAction func didTapSuccess(sender: AnyObject) {
+    @IBAction func didTapSuccess(_ sender: AnyObject) {
         SWMessage.sharedInstance.showNotificationWithTitle("Success",
             subtitle: "1 Ring delivered to Mount Doom",
-            type: .Success)
+            type: .success)
     }
     
     
-    @IBAction func didTapWithButton(sender: AnyObject) {
+    @IBAction func didTapWithButton(_ sender: AnyObject) {
         SWMessage.sharedInstance.showNotificationInViewController(self,
             title: "Update available",
             subtitle: "Please update our app. We added AI to replace you",
             image: nil,
-            type: .Success,
-            duration: .Automatic,
+            type: .success,
+            duration: .automatic,
             callback: nil,
             buttonTitle: "Update",
-            buttonCallback: { SWMessage.sharedInstance.showNotificationWithTitle("Thanks for updating", type: .Success)},
-            atPosition: .Top,
+            buttonCallback: { SWMessage.sharedInstance.showNotificationWithTitle("Thanks for updating", type: .success)},
+            atPosition: .top,
             canBeDismissedByUser: true)
     }
     
     
-    @IBAction func didTapToggleNav(sender: AnyObject) {
-        navigationController?.setNavigationBarHidden(!navigationController!.navigationBarHidden, animated: true)
+    @IBAction func didTapToggleNav(_ sender: AnyObject) {
+        navigationController?.setNavigationBarHidden(!navigationController!.isNavigationBarHidden, animated: true)
     }
     
-    @IBAction func didTapNavAlpha(sender: AnyObject) {
+    @IBAction func didTapNavAlpha(_ sender: AnyObject) {
         navigationController?.navigationBar.alpha = navigationController?.navigationBar.alpha == 1 ? 0.5 : 1
     }
     
-    @IBAction func didTapToggleFullscreen(sender: AnyObject) {
-        edgesForExtendedLayout = edgesForExtendedLayout == .None ? .All : .None
+    @IBAction func didTapToggleFullscreen(_ sender: AnyObject) {
+        edgesForExtendedLayout = edgesForExtendedLayout == UIRectEdge() ? .all : UIRectEdge()
     }
     
-    @IBAction func didTapDismiss(sender: AnyObject) {
-        SWMessage.sharedInstance.dismissActiveNotification()
+    @IBAction func didTapDismiss(_ sender: AnyObject) {
+        let _ = SWMessage.sharedInstance.dismissActiveNotification()
     }
     
-    @IBAction func didTapInfinite(sender: AnyObject) {
+    @IBAction func didTapInfinite(_ sender: AnyObject) {
         SWMessage.sharedInstance.showNotificationInViewController(self,
             title: "Endless",
             subtitle: "This message can not be dismissed and will not be hidden automatically. Tap the 'Dismiss' button to dismiss the currently shown message",
             image: nil,
-            type: .Success,
-            duration: .Endless,
+            type: .success,
+            duration: .endless,
             callback: nil,
             buttonTitle: nil,
             buttonCallback: nil,
-            atPosition: .Top,
+            atPosition: .top,
             canBeDismissedByUser: false)
     }
 
-    @IBAction func didTapLongMessage(sender: AnyObject) {
+    @IBAction func didTapLongMessage(_ sender: AnyObject) {
         SWMessage.sharedInstance.showNotificationInViewController(self,
             title: "Long",
             subtitle: "This message is displayed 10 seconds instead of the calculated value",
             image: nil,
-            type: .Success,
-            duration: .Custom(10),
+            type: .success,
+            duration: .custom(10),
             callback: nil,
             buttonTitle: nil,
             buttonCallback: nil,
-            atPosition: .Top,
+            atPosition: .top,
             canBeDismissedByUser: false)
     }
     
-    @IBAction func didTapText(sender: AnyObject) {
+    @IBAction func didTapText(_ sender: AnyObject) {
         SWMessage.sharedInstance.showNotificationInViewController(self,
             title: "Long Text",
             subtitle: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus",
             image: nil,
-            type: .Success,
-            duration: .Automatic,
+            type: .success,
+            duration: .automatic,
             callback: nil,
             buttonTitle: nil,
             buttonCallback: nil,
-            atPosition: .Top,
+            atPosition: .top,
             canBeDismissedByUser: false)
     }
     
     
-    @IBAction func didTapCustomDesign(sender: AnyObject) {
+    @IBAction func didTapCustomDesign(_ sender: AnyObject) {
         
     
         
     }
     
-    @IBAction func didTapBottom(sender: AnyObject) {
+    @IBAction func didTapBottom(_ sender: AnyObject) {
         SWMessage.sharedInstance.showNotificationInViewController(self,
             title: "Bottom",
             subtitle: "showing message at bottom of screen",
             image: nil,
-            type: .Success,
-            duration: .Automatic,
+            type: .success,
+            duration: .automatic,
             callback: nil,
             buttonTitle: nil,
             buttonCallback: nil,
-            atPosition: .Bottom,
+            atPosition: .bottom,
             canBeDismissedByUser: false)
     }
 
