@@ -23,8 +23,6 @@
 
 import UIKit
 
-private let messageViewMinimumPadding :CGFloat = 15.0
-
 public class SWMessageView :UIView , UIGestureRecognizerDelegate {
     
     public struct Style {
@@ -35,6 +33,22 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
         let titleFont: UIFont?
         let contentFont: UIFont?
         let shadowOffset: CGSize?
+        let roundedCorners: UIRectCorner?
+        let roundSize: CGSize?
+        let padding:CGFloat
+        
+        public init(image: UIImage?,backgroundColor: UIColor,textColor: UIColor,textShadowColor: UIColor?,titleFont: UIFont?,contentFont: UIFont?,shadowOffset: CGSize?,roundedCorners:UIRectCorner? = nil,roundSize:CGSize? = nil,padding:CGFloat = 15.0) {
+            self.image = image
+            self.backgroundColor = backgroundColor
+            self.textColor = textColor
+            self.textShadowColor = textShadowColor
+            self.titleFont = titleFont
+            self.contentFont = contentFont
+            self.shadowOffset = shadowOffset
+            self.roundedCorners = roundedCorners
+            self.roundSize = roundSize
+            self.padding = padding
+        }
     }
     
     /** The displayed title of this message */
@@ -115,13 +129,12 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
         self.callback = callback
         self.buttonCallback = buttonCallback
         let screenWidth: CGFloat = viewController.view.bounds.size.width
-        self.padding = messagePosition == .NavBarOverlay ? messageViewMinimumPadding + 10 : messageViewMinimumPadding
+        let options = style ?? SWMessageView.styleForMessageType(type)
+        self.padding = messagePosition == .NavBarOverlay ? options.padding + 10 : options.padding
         self.notificationType = type
         
         super.init(frame :CGRect.zero)
         
-        
-        let options = style ?? SWMessageView.styleForMessageType(type)
         let currentImage = image ?? options.image
         
         backgroundColor = UIColor.clearColor()
@@ -216,6 +229,21 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        let options = SWMessageView.styleForMessageType(notificationType)
+        guard let roundedCorners = options.roundedCorners,
+            let roundSize = options.roundSize else {
+                return
+        }
+        
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: roundedCorners, cornerRadii: roundSize)
+        let mask = CAShapeLayer()
+        mask.frame = self.bounds
+        mask.path = path.CGPath
+        self.layer.mask = mask
     }
     
     func updateHeightOfMessageView() -> CGFloat {

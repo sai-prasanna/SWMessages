@@ -135,8 +135,19 @@ class ViewController: UIViewController {
     
     
     @IBAction func didTapCustomDesign(sender: AnyObject) {
+        SWMessageView.styleForMessageType = defaultStyleForMessageType
         
-    
+        SWMessage.sharedInstance.showNotificationInViewController(self,
+          title: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus",
+          subtitle: nil,
+          image: nil,
+          type: .Message,
+          duration: .Automatic,
+          callback: nil,
+          buttonTitle: nil,
+          buttonCallback: nil,
+          atPosition: .Top,
+          canBeDismissedByUser: false)
         
     }
     
@@ -153,7 +164,28 @@ class ViewController: UIViewController {
             atPosition: .Bottom,
             canBeDismissedByUser: false)
     }
-
-    
 }
+
+private func defaultStyleForMessageType(type: SWMessageNotificationType) -> SWMessageView.Style {
+    let contentFontSize = CGFloat(12)
+    let titleFontSize = CGFloat(14)
+    
+    switch type {
+    default:
+        return SWMessageView.Style(
+            image: nil,
+            backgroundColor: UIColor.blackColor(),
+            textColor: UIColor.whiteColor(),
+            textShadowColor: nil,
+            titleFont: UIFont.systemFontOfSize(titleFontSize),
+            contentFont: UIFont.systemFontOfSize(contentFontSize),
+            shadowOffset: nil,
+            roundedCorners: [.BottomLeft,.BottomRight],
+            roundSize: CGSizeMake(10, 10),
+            padding: 25.0
+        )
+    }
+}
+
+
 
