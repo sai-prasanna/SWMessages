@@ -135,9 +135,20 @@ class ViewController: UIViewController {
     
     
     @IBAction func didTapCustomDesign(sender: AnyObject) {
+        let style: SWMessageView.Style = SWMessageView.Style(backgroundColor: UIColor.purpleColor(), textColor: UIColor.yellowColor())
         
-    
-        
+        SWMessage.sharedInstance.showNotificationInViewController(self,
+            title: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus",
+            subtitle: nil,
+            image: nil,
+            type: .Message,
+            duration: .Automatic,
+            callback: nil,
+            buttonTitle: nil,
+            buttonCallback: nil,
+            atPosition: .Top,
+            canBeDismissedByUser: false,
+            overrideStyle: style)
     }
     
     @IBAction func didTapBottom(sender: AnyObject) {
