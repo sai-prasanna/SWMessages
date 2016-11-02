@@ -35,6 +35,16 @@ public class SWMessageView :UIView , UIGestureRecognizerDelegate {
         let titleFont: UIFont?
         let contentFont: UIFont?
         let shadowOffset: CGSize?
+        
+        public init (image: UIImage? = nil, backgroundColor: UIColor, textColor: UIColor, textShadowColor: UIColor? = nil, titleFont: UIFont? = nil, contentFont: UIFont? = nil, shadowOffset: CGSize? = nil){
+            self.image = image
+            self.backgroundColor = backgroundColor
+            self.textColor = textColor
+            self.textShadowColor = textShadowColor
+            self.titleFont = titleFont
+            self.contentFont = contentFont
+            self.shadowOffset = shadowOffset
+        }
     }
     
     /** The displayed title of this message */
