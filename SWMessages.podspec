@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SWMessages"
-  s.version      = "0.3.0"
+  s.version      = "0.3.1"
   s.summary      = "A notification message view library"
 
   s.description  = <<-DESC
