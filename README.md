@@ -1,5 +1,8 @@
 SWMessages
 ==========
+
+### Deprecation Notice: This was a fun project, but there is a well maintained and  feature rich alternative [SwiftMessages] (https://github.com/SwiftKickMobile/SwiftMessages) So I am stopping development here. Please migrate to SwiftMessages if you want further support etc.
+
 This is port of [TSMessages](https://github.com/KrauseFx/TSMessages) library to Swift. The iOS6 design option is dropped.
 
 This library provides an easy to use class to show little notification views on the top of the screen.
